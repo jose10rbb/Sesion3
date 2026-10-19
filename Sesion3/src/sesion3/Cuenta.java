@@ -15,13 +15,30 @@ public class Cuenta {
         this.saldo = saldoInicial;
     }
 
-    public Double getSaldo() {
-        return this.saldo;
-    }
+    public String getNumero() { return mNumero; }
+    public String getTitular() { return nTitular; }
+    public Double getSaldo() { return saldo; }
+    public List<Movimiento> getMovimientos() { return mMovimientos; }
 
     public void ingresar(double x) {
-    	this.saldo = this.saldo + x;    }
+        if (x <= 0) {
+            return;
+        }
+        this.saldo += x;
+        mMovimientos.add(new Movimiento(x, Movimiento.Signo.H, "Ingreso en cuenta"));
+    }
 
     public void retirar(double x) {
-    	this.saldo = this.saldo - x;    }
+        if (x <= 0) {
+            return;
+        }
+        // Las cuentas tienen un límite de descubierto de -500€
+        if (this.saldo - x < -500.0) {
+            System.err.println("Fondos insuficientes (saldo " + this.saldo + "€) en la cuenta " 
+                               + this.mNumero + " para el reintegro de " + x + "€");
+            return;
+        }
+        this.saldo -= x;
+        mMovimientos.add(new Movimiento(x, Movimiento.Signo.D, "Reintegro en cuenta"));
+    }
 }
