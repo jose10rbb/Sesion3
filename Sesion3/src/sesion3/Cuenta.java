@@ -20,10 +20,8 @@ public class Cuenta {
     }
 
     public void ingresar(double x) {
-        // Vacío a propósito para que falle (RED)
-    }
+    	this.saldo = this.saldo + x;    }
 
     public void retirar(double x) {
-        // Vacío a propósito para que falle (RED)
-    }
+    	this.saldo = this.saldo - x;    }
 }
